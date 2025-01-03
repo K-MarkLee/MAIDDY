@@ -39,12 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     # my apps
-    "chatbot",
-    "diaries",
     "users",
-    "schedules",
-    "todo",
-
 
     # thrid party apps
     "rest_framework",
