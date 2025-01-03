@@ -37,6 +37,19 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    # my apps
+    "chatbot",
+    "diaries",
+    "users",
+    "schedules",
+    "todo",
+
+
+    # thrid party apps
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist", # 로그아웃 시 blacklist 넣어서 토큰 만료
 ]
 
 MIDDLEWARE = [
@@ -103,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "kr-ko" # 영어 > 한국어 : 문제 생길시 변경
 
 TIME_ZONE = "UTC"
 
@@ -121,3 +134,31 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication', # 세션 인증 방식
+        'rest_framework.authentication.BasicAuthentication', # 기본 인증 방식
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated', # 인증된 사용자만 접근 가능
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination', # 다이어리 페이지네이션
+}
+
+
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30), # access token 30분 유효
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1), # refresh token 유효 1일
+    'ROTATE_REFRESH_TOKENS': False, # refresh token 갱신
+}
+
+
+# Media 설정
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
