@@ -39,7 +39,6 @@ def user_create(request):
 
 
 # 로그인 API
-
 @api_view(['POST']) # POST 요청만 허용
 @authentication_classes([])  # 인증 비활성화
 @permission_classes([])      # 권한 비활성화
@@ -60,7 +59,7 @@ def login(request):
         }, status=status.HTTP_200_OK)
     else:
         # 인증 실패
-        return Response({"error": "Invalid username or password"}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({"error": "Invalid email or password"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 

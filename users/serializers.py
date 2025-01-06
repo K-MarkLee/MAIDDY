@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import User
 
 class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
         fields = ['email', 'username', 'password', 'birth_of_date', 'bio', 'gender', 'profile_image']
@@ -9,7 +10,6 @@ class UserSerializer(serializers.ModelSerializer):
             'password': {'write_only': True},  # 비밀번호는 출력하지 않음, just 읽기전용
         }
     
-
 
     def create(self, validated_data):
         user = User.objects.create_user(
