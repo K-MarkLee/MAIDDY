@@ -8,6 +8,8 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {'write_only': True},  # 비밀번호는 출력하지 않음, just 읽기전용
         }
+    
+
 
     def create(self, validated_data):
         user = User.objects.create_user(
@@ -20,3 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
         )
         return user
 
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['email', 'username', 'birth_of_date', 'bio', 'profile_image','gender']

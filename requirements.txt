@@ -1,9 +1,16 @@
 asgiref==3.8.1
-Django==5.1.4
+asttokens==3.0.0
+Django==4.2.16
 django-allauth==65.3.1
 django-environ==0.11.2
 djangorestframework==3.15.2
 djangorestframework-simplejwt==5.3.1
+gunicorn==23.0.0
+packaging==24.2
+pillow==11.1.0
+psycopg2==2.9.10
+psycopg2-binary==2.9.10
 PyJWT==2.10.1
+python-decouple==3.8
 sqlparse==0.5.3
 tzdata==2024.2

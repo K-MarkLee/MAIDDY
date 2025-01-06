@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt.token_blacklist", # 로그아웃 시 blacklist 넣어서 토큰 만료
 ]
 
-AUTH_USER_MODEL = 'Users.User'
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -138,8 +138,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication', # 세션 인증 방식
-        'rest_framework.authentication.BasicAuthentication', # 기본 인증 방식
+        'rest_framework_simplejwt.authentication.JWTAuthentication', # JWT 토큰 인증
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated', # 인증된 사용자만 접근 가능

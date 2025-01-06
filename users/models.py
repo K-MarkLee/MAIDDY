@@ -6,9 +6,10 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager, Permission
 # 메서드는 create_user와 create_superuser
 # 일반 사용자 및 관리자 계정을 생성할 것.
 class UserManager(BaseUserManager): 
-    def create_user(self, username, email, password=None, gender=None, bio=None, birth_of_date=None, **extra_fields): 
+    def create_user(self, username, email, password=None, gender=None, bio=None, birth_of_date=None, **extra_fields):  ##
         if not email:  # 이메일이 없는 경우 에러 발생
             raise ValueError('Must have user email.')
+        
         if not username:  # 사용자 이름이 없는 경우 에러 발생생
             raise ValueError('Must have user username.')
 
@@ -25,6 +26,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)  # DB에 저장(여러 데이터베이스를 사용하는 경우 필요)
         return user
 
+
     def create_superuser(self, email, username, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)  # 스태프 권한 부여
         extra_fields.setdefault('is_superuser', True)  # 슈퍼유저 권한 부여
@@ -35,6 +37,7 @@ class UserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True.')
 
         return self.create_user(email=email, username=username, password=password, **extra_fields)
+
 
 # 사용자 모델
 # AbstractUser를 상속받아서 아래 것들 추가
@@ -49,7 +52,7 @@ class User(AbstractUser, PermissionsMixin):
     birth_of_date = models.DateField(null=True, blank=True)  #생년월일(선택)
     bio = models.TextField(blank=True, null=True)  #자기소개(선택)
     profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True)  # 프로필 이미지(선택)
-    gender = models.CharField(max_length=10, choices=GenderChoices.choices, null=True, blank=True)  # 성별(선택)
+    gender = models.CharField(max_length=10, choices=GenderChoices.choices, null=True, blank=True)  # 성별(선택) ##
 
     objects = UserManager()  # UserManager 사용
 

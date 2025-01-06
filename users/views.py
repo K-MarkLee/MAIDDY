@@ -2,8 +2,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from .serializers import UserSerializer, ProfileSerializer
-from rest_framework.authoken.models import Token
-from rest_framework.permssions import IsAuthenticated
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from .models import User
 from django.contrib.auth import get_user_model
@@ -29,15 +29,14 @@ User = get_user_model()
 @authentication_classes([])  # 인증 비활성화
 @permission_classes([])      # 권한 비활성화
 def user_create(request):
-    if request.method == 'POST':
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.save()
-            return Response({
-                "message": "User created successfully",
-                "user": serializer.data
-            }, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    serializer = UserSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({
+            "message": "User created successfully",
+            "user": serializer.data
+        }, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -76,13 +75,14 @@ def logout(request):
         token.blacklist() # 토큰 블랙리스트 추가 (토큰 만료로 로그아웃 처리)
 
         return Response({"message": "Logout successful"}, status=status.HTTP_200_OK)
+    
     except:
         refresh_token = request.data.get('refresh')
         print(refresh_token)
         return Response({"error": "Invalid refresh token"}, status=status.HTTP_400_BAD_REQUEST)
     
     
-@api_view(['GET',]) # GET 요청만 허용
+@api_view(['GET']) # GET 요청만 허용
 def profile(request, username):
     if request.method == 'GET': # GET 요청인 경우 프로필 조회
         user = get_object_or_404(User, username=username)   
