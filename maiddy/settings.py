@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     # my apps
-    "users",
+    
 
     # thrid party apps
     "rest_framework",
@@ -81,10 +81,17 @@ WSGI_APPLICATION = "maiddy.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
+from decouple import config # 환경변수 불러오기
+# postgresql 설정 (나중에 .env로 변경)
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql", # postgresql로 변경
+        "NAME": config("DB_NAME"), # 데이터베이스 이름
+        "USER": config('DB_USER'), # 데이터베이스 유저
+        "PASSWORD": config('DB_PASSWORD'), # 데이터베이스 비밀번호
+        "HOST": config('DB_HOST'), # 데이터베이스 호스트
+        "PORT": config('DB_PORT'), 
     }
 }
 
@@ -134,8 +141,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication', # 세션 인증 방식
-        'rest_framework.authentication.BasicAuthentication', # 기본 인증 방식
+        'rest_framework.authentication.JWTAuthentication', # JWT 토큰 인증
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated', # 인증된 사용자만 접근 가능
