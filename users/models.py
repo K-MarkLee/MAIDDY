@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager, Permission
 # 메서드는 create_user와 create_superuser
 # 일반 사용자 및 관리자 계정을 생성할 것.
 class UserManager(BaseUserManager): 
-    def create_user(self, username, email, password=None, gender=None, bio=None, birth_of_date=None, **extra_fields):  ##
+    def create_user(self, username, email, password=None, gender=None, bio=None, birth_of_date=None, **extra_fields):
         if not email:  # 이메일이 없는 경우 에러 발생
             raise ValueError('Must have user email.')
         

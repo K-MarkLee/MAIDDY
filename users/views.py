@@ -2,8 +2,6 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from .serializers import UserSerializer, ProfileSerializer
-from rest_framework.authtoken.models import Token
-from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from .models import User
 from django.contrib.auth import get_user_model
@@ -46,11 +44,11 @@ def user_create(request):
 @authentication_classes([])  # 인증 비활성화
 @permission_classes([])      # 권한 비활성화
 def login(request):
-    username = request.data.get('username')
+    email = request.data.get('email')
     password = request.data.get('password')
 
     # 사용자 인증
-    user = authenticate(request, username=username, password=password)
+    user = authenticate(request, email=email, password=password)
 
     if user is not None: 
         # 인증 성공: 토큰 발급(JWT 토큰 생성)
