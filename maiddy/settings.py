@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     # my apps
+    "users",
     
 
     # thrid party apps
@@ -47,7 +48,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt.token_blacklist", # 로그아웃 시 blacklist 넣어서 토큰 만료
 ]
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'users.User' # 사용자 모델 변경
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
