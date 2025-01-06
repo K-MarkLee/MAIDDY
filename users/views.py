@@ -100,7 +100,7 @@ def profile(request, username):
 
 
 
-
+# 테스트 미완
 # 비밀번호 재설정 요청 API (이메일로 링크 보내기)
 @api_view(['POST'])
 @authentication_classes([])  # 인증 비활성화
