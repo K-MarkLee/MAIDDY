@@ -20,6 +20,8 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_HOST: ${DB_HOST}
+    ports:
+      - "5432:5432"
 
 
   nginx: # nginx 컨테이너 설정. (nginx란 웹 서버 소프트웨어로 정적 파일을 처리하는데 사용.)
