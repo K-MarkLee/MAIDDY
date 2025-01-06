@@ -20,7 +20,7 @@ def diary_list(request):
 def diary_create(request): 
     serializer = DiarySerializer(data=request.data) # 다이어리 생성을 위한 직렬화
     if serializer.is_valid(): # 직렬화된 데이터가 유효한지 확인
-        serializer.save() # 저장
+        serializer.save(user = request.user) # 저장
         return Response(serializer.data, status=status.HTTP_201_CREATED) # 저장된 데이터 반환
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) # 오류 발생시 오류 반환
 
