@@ -1,6 +1,6 @@
-from django.urls import path
 from . import views
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenBlacklistView
+from django.urls import path
+from rest_framework_simplejwt.views import TokenRefreshView
 
 
 app_name = "users"
@@ -11,7 +11,7 @@ urlpatterns = [
     path('logout/', views.logout, name='user_logout'),  # 로그아웃
 
 
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'), # 프론트에서 필요함. (로그인 토큰 갱신)
 
     # path('profile/<str:username>/', views.profile, name='user_profile'),  # 프로필 조회
 

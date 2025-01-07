@@ -1,12 +1,11 @@
 from rest_framework import status
-from .serializers import UserSerializer
+from .serializers import UserCreateSerializer
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
-from django.contrib.auth import get_user_model
+from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
-
 
 
 
@@ -16,10 +15,10 @@ User = get_user_model()
 
 # 회원가입 API
 @api_view(['POST']) # POST 요청만 허용
-@permission_classes([])      # 권한 비활성화
 @authentication_classes([])  # 인증 비활성화
+@permission_classes([AllowAny])      # 권한 비활성화
 def user_create(request):
-    serializer = UserSerializer(data=request.data)
+    serializer = UserCreateSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response({
@@ -32,8 +31,8 @@ def user_create(request):
 
 # 로그인 API
 @api_view(['POST']) # POST 요청만 허용
-@permission_classes([])      # 권한 비활성화
 @authentication_classes([])  # 인증 비활성화
+@permission_classes([AllowAny])      # 권한 비활성화
 def login(request):
     email = request.data.get('email')
     password = request.data.get('password')
@@ -47,7 +46,7 @@ def login(request):
         return Response({
             "access": str(refresh.access_token),
             "refresh": str(refresh),
-            "message": "로그인 성공",
+            "message": f"{user.username}님, 다시만나서 반갑습니다.",
         }, status=status.HTTP_200_OK)
     else:
         # 인증 실패
@@ -56,19 +55,20 @@ def login(request):
 
 
 @api_view(['POST']) # POST 요청만 허용
-@permission_classes([])      # 권한 비활성화
 @authentication_classes([])  # 인증 비활성화
+@permission_classes([AllowAny])      # 권한 비활성화
 def logout(request):
     try:
         refresh_token = request.data.get('refresh') # refresh 토큰 가져오기 (refresh 토큰이란 access 토큰을 재발급하는 토큰)
         
+        
         token = RefreshToken(refresh_token) # refresh 토큰 생성
         token.blacklist() # 토큰 블랙리스트 추가 (토큰 만료로 로그아웃 처리)
 
-        return Response({"message": "로그아웃 되셧습니다. "}, status=status.HTTP_200_OK)
+        return Response({"message": "로그아웃되었습니다. "}, status=status.HTTP_200_OK)
     
-    except Exception:
-        return Response({"error": "로그이웃에 실패하셧습니다. "}, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        return Response({"error": "유효하지 않은 토큰 입니다. 로그이웃에 실패하셧습니다. ", "detials":str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 # 프로필은 MVP 에서는 제외. 추후에 추가 예정
