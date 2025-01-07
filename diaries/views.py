@@ -1,9 +1,9 @@
-from .models import Diary, Comment
-from .serializers import DiarySerializer, CommentSerializer
+from .models import Diary
+from .serializers import DiarySerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-import requests #AI 챗봇 API 호출을 위한 requests 라이브러리리
+
 
 
 # Create your views here.
@@ -25,22 +25,6 @@ def diary_create(request):
         serializer.save(user = request.user) # 저장
         return Response(serializer.data, status=status.HTTP_201_CREATED) # 저장된 데이터 반환
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) # 오류 발생시 오류 반환
-
-
-
-
-
-# 일기 수정
-
-
-
-
-
-# 
-
-
-
-
 
 
 

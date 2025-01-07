@@ -22,7 +22,7 @@ def user_create(request):
     if serializer.is_valid():
         serializer.save()
         return Response({
-            "message": "회원가입이 정상적으로 완료되었습니다.",
+            "message": f"{serializer.data['username']}님 회원가입이 정상적으로 완료되었습니다.",
             "user": serializer.data
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -46,7 +46,7 @@ def login(request):
         return Response({
             "access": str(refresh.access_token),
             "refresh": str(refresh),
-            "message": f"{user.username}님, 다시만나서 반갑습니다.",
+            "message": f"{user.username}님, 반갑습니다!",
         }, status=status.HTTP_200_OK)
     else:
         # 인증 실패

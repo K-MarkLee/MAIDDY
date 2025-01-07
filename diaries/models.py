@@ -13,9 +13,3 @@ class Diary(models.Model):
     def __str__(self):
         return f"{self.select_date} - {self.title if self.title else 'Untitled'}" # 날짜 - 제목
     
-    
-class Comment(models.Model):
-    diary = models.OneToOneField(Diary, )
-    
-    def __str__(self):
-        return f"Comment by {self.user} on {self.diary.select_date}"    
