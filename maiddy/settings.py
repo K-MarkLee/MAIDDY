@@ -40,12 +40,17 @@ INSTALLED_APPS = [
 
     # my apps
     "users",
+    "diaries",
+    "todo",
+    
 
     # thrid party apps
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist", # 로그아웃 시 blacklist 넣어서 토큰 만료
 ]
+
+AUTH_USER_MODEL = 'users.User' # 사용자 모델 변경
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -62,7 +67,9 @@ ROOT_URLCONF = "maiddy.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            BASE_DIR / 'templates',
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -81,10 +88,17 @@ WSGI_APPLICATION = "maiddy.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
+from decouple import config # 환경변수 불러오기
+# postgresql 설정 (나중에 .env로 변경)
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql", # postgresql로 변경
+        "NAME": config("DB_NAME"), # 데이터베이스 이름
+        "USER": config('DB_USER'), # 데이터베이스 유저
+        "PASSWORD": config('DB_PASSWORD'), # 데이터베이스 비밀번호
+        "HOST": config('DB_HOST'), # 데이터베이스 호스트
+        "PORT": config('DB_PORT'), 
     }
 }
 
@@ -134,8 +148,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication', # 세션 인증 방식
-        'rest_framework.authentication.BasicAuthentication', # 기본 인증 방식
+        'rest_framework_simplejwt.authentication.JWTAuthentication', # JWT 토큰 인증
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated', # 인증된 사용자만 접근 가능
@@ -150,7 +163,8 @@ from datetime import timedelta
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30), # access token 30분 유효
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1), # refresh token 유효 1일
-    'ROTATE_REFRESH_TOKENS': False, # refresh token 갱신
+    'ROTATE_REFRESH_TOKENS': True, # refresh token 갱신
+    'BLACKLIST_AFTER_ROTATION': True, # refresh token 갱신 후 blacklist
 }
 
 
