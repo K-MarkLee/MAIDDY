@@ -52,7 +52,7 @@ class User(AbstractUser, PermissionsMixin):
     birth_of_date = models.DateField(null=True, blank=True)  #생년월일(선택)
     bio = models.TextField(blank=True, null=True)  #자기소개(선택)
     profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True)  # 프로필 이미지(선택)
-    gender = models.CharField(max_length=10, choices=GenderChoices.choices, null=True, blank=True)  # 성별(선택) ##
+    gender = models.CharField(max_length=10, choices=GenderChoices.choices, null=True, blank=True)  # 성별(선택)
 
     objects = UserManager()  # UserManager 사용
 

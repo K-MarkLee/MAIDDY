@@ -163,7 +163,8 @@ from datetime import timedelta
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30), # access token 30분 유효
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1), # refresh token 유효 1일
-    'ROTATE_REFRESH_TOKENS': False, # refresh token 갱신
+    'ROTATE_REFRESH_TOKENS': True, # refresh token 갱신
+    'BLACKLIST_AFTER_ROTATION': True, # refresh token 갱신 후 blacklist
 }
 
 

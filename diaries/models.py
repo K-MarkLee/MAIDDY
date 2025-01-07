@@ -7,8 +7,15 @@ class Diary(models.Model):
     content = models.TextField() # 내용
     select_date = models.DateField() # 입력한 날짜
     created_at = models.DateTimeField(auto_now_add = True) # 생성일자
-    # updated_at = models.DateTimeField(auto_now = True) # 수정일자 현재 수정기능 미 구현으로 인한 주석처리
+    updated_at = models.DateTimeField(auto_now = True) # 수정일자 현재 수정기능 미 구현으로 인한 주석처리
     
     
     def __str__(self):
         return f"{self.select_date} - {self.title if self.title else 'Untitled'}" # 날짜 - 제목
+    
+    
+class Comment(models.Model):
+    diary = models.OneToOneField(Diary, )
+    
+    def __str__(self):
+        return f"Comment by {self.user} on {self.diary.select_date}"    
