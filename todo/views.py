@@ -1,9 +1,9 @@
-from .models import Todo
+from .models import Todo, Checklist
+from datetime import datetime
 from rest_framework import status
-from .serializers import TodoSerializer, CheckListSerializer
+from .serializers import TodoSerializer, ChecklistSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from datetime import datetime
 
 
 # To-do list 할일 표시
@@ -14,7 +14,7 @@ def todo_list(request, date): # 달력으로 인해 특정 날짜에 관해서 t
         selected_date = datetime.strptime(date, "%Y-%m-%d").date()
 
     except ValueError:
-        return Response({"error": "Invalid date format. Use YYYY-MM-DD."}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error": "잘못된 입력입니다. yyyy-mm-dd 형식으로 입력해주세요. "}, status=status.HTTP_400_BAD_REQUEST)
 
     # 해당 날짜에 해당하는 To-do 필터링
     todo = Todo.objects.filter(user=request.user, select_date=selected_date).order_by('-created_at')
@@ -35,23 +35,14 @@ def todo_create(request):
 
 
 
-# 할 일 수정/삭제
-@api_view(['PUT','DELETE'])
+# 할 일 삭제
+@api_view(['DELETE'])
 def todo_update(request, todo_id):
     try:
-        todo = Todo.objects.get(pk=todo_id, user=request.user) # 우저의 할 일만 수정 가능하게
+        todo = Todo.objects.get(todo_id=todo_id, user=request.user) # 우저의 할 일만 수정 가능하게
     except Todo.DoesNotExist:
         return Response({"error": "Todo를 찾을 수 없습니다."}, status=status.HTTP_404_NOT_FOUND)
-        
-    if request.method == 'PUT':
-        serializer = TodoSerializer(todo, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-    if request.method == 'DELETE':
-        todo.delete()
-        return Response({"message": "Todo를 성공적으로 삭제했습니다."}, status=status.HTTP_200_OK)
-
+    
+    todo.delete()
+    return Response({"message": "Todo를 성공적으로 삭제했습니다."}, status=status.HTTP_200_OK)
+    
