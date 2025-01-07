@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # my apps
     "users",
     "diaries",
+    "todo",
     
 
     # thrid party apps

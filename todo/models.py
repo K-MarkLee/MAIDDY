@@ -11,5 +11,6 @@ class Todo(models.Model):
     
     
     def __str__(self):
-        return f"{self.title} - {"Completed" if self.completed else "pending"}" # 제목 - 완료 여부
+        return f"{self.title} - {'Completed' if self.completed else 'Pending'}"
+
     
