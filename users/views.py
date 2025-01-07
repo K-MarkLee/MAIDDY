@@ -79,17 +79,17 @@ def logout(request):
         return Response({"error": "Invalid refresh token"}, status=status.HTTP_400_BAD_REQUEST)
     
     
-@api_view(['GET']) # GET 요청만 허용
-def profile(request, username):
-    if request.method == 'GET': # GET 요청인 경우 프로필 조회
-        user = get_object_or_404(User, username=username)   
-        try:
-            serializer = ProfileSerializer(user)
+# @api_view(['GET']) # GET 요청만 허용
+# def profile(request, username):
+#     if request.method == 'GET': # GET 요청인 경우 프로필 조회
+#         user = get_object_or_404(User, username=username)   
+#         try:
+#             serializer = ProfileSerializer(user)
 
-        except User.DoesNotExist: # 사용자가 존재하지 않는 경우
-            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+#         except User.DoesNotExist: # 사용자가 존재하지 않는 경우
+#             return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
         
-        return Response(serializer.data, status=status.HTTP_200_OK) 
+#         return Response(serializer.data, status=status.HTTP_200_OK) 
 
-# 수정은 프로필 칸 들어가서!!!!! 여기서는 조회만!!!
+# # 수정은 프로필 칸 들어가서!!!!! 여기서는 조회만!!!
 
