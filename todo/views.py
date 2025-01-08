@@ -21,7 +21,7 @@ def todo_list(request):
         return Response({"error": "날짜 형식이 올바르지 않습니다. YYYY-MM-DD 형식으로 전달해주세요."}, status=status.HTTP_400_BAD_REQUEST)
     
 
-    todo = Todo.objects.filter(select_date=select_date, user=request.user).order_by("-created_at") # 사용자별로 할 일 조회
+    todo = Todo.objects.filter(select_date=select_date, user=request.user).order_by("created_at") # 사용자별로 할 일 조회
 
 
     if is_completed is not None:
