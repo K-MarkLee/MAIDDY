@@ -1,16 +1,16 @@
-from .models import Diary, Comment
-from .serializers import DiarySerializer, CommentSerializer
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from rest_framework import status
+from .models import Diary, Comment
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .serializers import DiarySerializer, CommentSerializer
 
 
 # 다이어리 상세 조회
 @api_view(['GET'])
-def diary_detail(request, diary_id):
+def diary_detail(request, date):
     try:
         # 다이어리 ID와 사용자의 일치 확인(즉 해당 사용자의 다이어리만 조회)
-        diary = Diary.objects.get(pk=diary_id, user=request.user) # 다이어리 id로 조회
+        diary = Diary.objects.get(select_date = date, user=request.user) # 다이어리 id로 조회
     except Diary.DoesNotExist: # 다이어리가 없을 경우
         return Response({"error": "다이어리를 찾을 수 없습니다."}, status=status.HTTP_404_NOT_FOUND) # 오류 반환
 
