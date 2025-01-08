@@ -13,9 +13,3 @@ class Diary(models.Model):
     def __str__(self):
         return f"{self.select_date} - {self.title if self.title else 'Untitled'}" # 날짜 - 제목
     
-    
-class Comment(models.Model):
-    diary = models.OneToOneField(Diary, on_delete=models.CASCADE, related_name = 'comment')
-    chatbot_url =models.URLField() # 챗봇 패이지로
-    def __str__(self):
-        return f"Chatbot link for {self.diary.title} on {self.diary.select_date}"

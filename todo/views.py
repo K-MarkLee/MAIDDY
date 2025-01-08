@@ -90,7 +90,7 @@ def todo_delete(request, todo_id):
         return Response({"error": "Todo not found"}, status=status.HTTP_404_NOT_FOUND)
     
     todo.delete()
-    return Response({"message": "Todo list deleted successfully."}, status=status.HTTP_204_NO_CONETENT)
+    return Response({"message": "Todo list deleted successfully."})
 
 
 
