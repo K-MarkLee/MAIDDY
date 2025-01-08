@@ -1,5 +1,5 @@
 from .models import Diary, Comment
-from .serializers import DiarySerializer
+from .serializers import DiarySerializer, CommentSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -77,12 +77,6 @@ def diary_create(request):
 
 
 
-
-
-
-
-
-
 # 다이어리 수정
 @api_view(['PUT'])
 def diary_update(request, diary_id):
@@ -96,7 +90,7 @@ def diary_update(request, diary_id):
         updated_diary = serializer.save()  # 다이어리 수정
         
         # 수정된 다이어리에 맞춰 챗봇 URL 갱신
-        chatbot_url = f"/api/chatbot/ai/comment?year={updated_diary.select_date.year}&month={updated_diary.select_date.month}&day={updated_diary.select_date.day}"
+        chatbot_url = f"/api/ai/chatbot/comment?year={updated_diary.select_date.year}&month={updated_diary.select_date.month}&day={updated_diary.select_date.day}"
 
         # 기존의 Comment가 있으면 URL 갱신, 없으면 새로 생성
         comment, created = Comment.objects.get_or_create(diary=updated_diary)
@@ -107,7 +101,6 @@ def diary_update(request, diary_id):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 

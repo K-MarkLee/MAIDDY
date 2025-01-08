@@ -10,6 +10,7 @@ class DiarySerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'content', 'select_date']
         read_only_fields = ['user', 'created_at', 'updated_at'] # 유저 정보는 수정 불가능
 
+
 class CommentSerializer(serializers.ModelSerializer):
     #챗봇 url 링크만 직렬화
     chatbot_url = serializers.URLField()
