@@ -1,7 +1,7 @@
-from .models import Todo, Checklist
+from .models import Todo
 from datetime import datetime
 from rest_framework import status
-from .serializers import TodoSerializer, ChecklistSerializer
+from .serializers import TodoSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
