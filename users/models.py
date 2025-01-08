@@ -6,20 +6,17 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager, Permission
 # 메서드는 create_user와 create_superuser
 # 일반 사용자 및 관리자 계정을 생성할 것.
 class UserManager(BaseUserManager): 
-    def create_user(self, username, email, password=None, gender=None, bio=None, birth_of_date=None, **extra_fields):
+    def create_user(self, username, email, password=None, **extra_fields): # password=None은 기본값이 None이라는 뜻 / **extra_fields는 추가 필드를 받기 위함
         if not email:  # 이메일이 없는 경우 에러 발생
-            raise ValueError('Must have user email.')
+            raise ValueError('이메일이 필요합니다.')
         
         if not username:  # 사용자 이름이 없는 경우 에러 발생생
-            raise ValueError('Must have user username.')
+            raise ValueError('유저이름이 필요합니다.')
 
-        user = self.model(
+        user = self.model( # 사용자 생성
             email=self.normalize_email(email),  # 이메일 소문자로 변경
-            username=username,
-            gender=gender,
-            bio=bio,
-            birth_of_date=birth_of_date,
-            **extra_fields
+            username=username,  # 사용자 이름
+            **extra_fields # 추가 필드
         )
 
         user.set_password(password)  # 비밀번호 설정(암호화)
@@ -32,9 +29,10 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', True)  # 슈퍼유저 권한 부여
 
         if extra_fields.get('is_staff') is not True:  # 스태프 권한이 없는 경우
-            raise ValueError('Superuser must have is_staff=True.')
+            raise ValueError('스태프는 is_staff=True 여야 합니다.')
+        
         if extra_fields.get('is_superuser') is not True:  # 슈퍼유저 권한이 없는 경우
-            raise ValueError('Superuser must have is_superuser=True.')
+            raise ValueError('관리자는 is_superuser=True 여야 합니다.')
 
         return self.create_user(email=email, username=username, password=password, **extra_fields)
 
@@ -42,17 +40,22 @@ class UserManager(BaseUserManager):
 # 사용자 모델
 # AbstractUser를 상속받아서 아래 것들 추가
 class User(AbstractUser, PermissionsMixin):
-    class GenderChoices(models.TextChoices):  # 성별 선택
-        MALE = 'M', 'Male'
-        FEMALE = 'F', 'Female'
-        NONE = 'NONE', 'Prefer not to answer' #이거 한글로 적으면 안되나요?
+
+    # 프로필 필드 (구현시 사용 예정)
+    # class GenderChoices(models.TextChoices):  # 성별 선택
+    #     MALE = 'M', 'Male'
+    #     FEMALE = 'F', 'Female'
+    #     NONE = 'NONE', 'Prefer not to answer' #이거 한글로 적으면 안되나요?
 
     email = models.EmailField(max_length=50, unique=True)  #이메일 필드
     username = models.CharField(max_length=30, unique=True, validators=[MinLengthValidator(3)])  # 아이디로 사용할 username 필드 / 최소 3글자 이상
-    birth_of_date = models.DateField(null=True, blank=True)  #생년월일(선택)
-    bio = models.TextField(blank=True, null=True)  #자기소개(선택)
-    profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True)  # 프로필 이미지(선택)
-    gender = models.CharField(max_length=10, choices=GenderChoices.choices, null=True, blank=True)  # 성별(선택)
+
+    # 프로필 필드 (구현시 사용 예정)
+    # birth_of_date = models.DateField(null=True, blank=True)  #생년월일(선택)
+    # bio = models.TextField(blank=True, null=True)  #자기소개(선택)
+    # profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True)  # 프로필 이미지(선택)
+    # gender = models.CharField(max_length=10, choices=GenderChoices.choices, null=True, blank=True)  # 성별(선택)
+
 
     objects = UserManager()  # UserManager 사용
 
