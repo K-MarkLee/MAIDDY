@@ -14,4 +14,4 @@ class CommentSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Comment
-        fields = ['id,' 'chatbot_url']
+        fields = ['id', 'chatbot_url']
