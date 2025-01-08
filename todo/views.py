@@ -24,6 +24,7 @@ def todo_list(request, date):
 # To-do list 생성 API
 @api_view(['POST'])
 def todo_create(request):
+    print("hi")
     serializer = TodoSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save(user=request.user) #현재 유저 정보에 To-do를 추가

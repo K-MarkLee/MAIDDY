@@ -5,31 +5,6 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
-
-# Create your views here.
-# 다이어리 목록 조회(작성한 사용자만)
-@api_view(['GET'])
-def diary_list(request):
-    diaries = Diary.objects.filter(user=request.user).order_by('-select_date')
-    # 로그인한 사용자에 해당하는 다이어리만 조회, 최신순으로 정렬
-    serializer = DiarySerializer(diaries, many=True) # 다이어리 목록을 직렬화
-    return Response(serializer.data, status=status.HTTP_200_OK) # 직렬화된 데이터를 반환
-
-
-# 다이어리 작성성
-@api_view(['POST'])
-def diary_create(request): 
-    serializer = DiarySerializer(data=request.data) # 다이어리 생성을 위한 직렬화
-    if serializer.is_valid(): # 직렬화된 데이터가 유효한지 확인
-        # 다이어리 저장 시 현재 사용자 정보와 연결결
-        serializer.save(user = request.user) # 저장
-        return Response(serializer.data, status=status.HTTP_201_CREATED) # 저장된 데이터 반환
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) # 오류 발생시 오류 반환
-
-
-
-
-
 # 다이어리 상세 조회
 @api_view(['GET'])
 def diary_detail(request, diary_id):
@@ -38,7 +13,6 @@ def diary_detail(request, diary_id):
         diary = Diary.objects.get(pk=diary_id, user=request.user) # 다이어리 id로 조회
     except Diary.DoesNotExist: # 다이어리가 없을 경우
         return Response({"error": "다이어리를 찾을 수 없습니다."}, status=status.HTTP_404_NOT_FOUND) # 오류 반환
-
 
     # 다이어리 직렬화
     diary_serializer = DiarySerializer(diary)
@@ -56,6 +30,7 @@ def diary_detail(request, diary_id):
         "diary" : diary_serializer.data,
         "chatbot_url" : chatbot_url, #프론트엔드에서 버튼 제공할 것
     }, status=status.HTTP_200_OK) # 직렬화된 데이터 반환, 챗봇 url 포함함
+
 
 
 # 다이어리 작성 

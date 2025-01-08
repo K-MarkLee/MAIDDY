@@ -90,7 +90,8 @@ WSGI_APPLICATION = "maiddy.wsgi.application"
 
 
 from decouple import config # 환경변수 불러오기
-# postgresql 설정 (나중에 .env로 변경)
+#postgresql 설정 (나중에 .env로 변경)
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql", # postgresql로 변경
@@ -101,6 +102,13 @@ DATABASES = {
         "PORT": config('DB_PORT'), 
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
