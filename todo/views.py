@@ -5,17 +5,18 @@ from .serializers import TodoSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from datetime import datetime
 
 
 # To-do list 할일 표시
 @api_view(['GET'])
-def todo_list(request):
-    select_date = request.query_params.get('select_date')  # 쿼리 파라미터로 날짜 필터링
-    if select_date:
-        todo = Todo.objects.filter(user=request.user, select_date=select_date).order_by('-created_at')
-    else:
-        todo = Todo.objects.filter(user=request.user).order_by('-created_at')
+def todo_list(request, date):
+    try:
+        selected_date = datetime.strptime(date, '%Y-%m-%d').date()
+    except ValueError:
+        return Response({"error": "할일 날짜의 형태가 틀렸습니다. YYYY-MM-DD 형식으로 작성해주세요. "}, status=status.HTTP_400_BAD_REQUEST)
 
+    todo = Todo.objects.filter(select_date=selected_date, user=request.user).order_by("-created_at") # 유저의 할 일만 조회 가능하도록
     serializer = TodoSerializer(todo, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
