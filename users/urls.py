@@ -14,5 +14,4 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'), # 프론트에서 필요함. (로그인 토큰 갱신)
 
     # path('profile/<str:username>/', views.profile, name='user_profile'),  # 프로필 조회
-
 ]
