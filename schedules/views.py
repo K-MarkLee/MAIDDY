@@ -96,10 +96,10 @@ def schedule_delete(request, schedule_id):
     try:
         schedule = Schedule.objects.get(pk=schedule_id, user=request.user) # 유저의 일정표만 삭제 가능하도록
     except Schedule.DoesNotExist:
-        return Response({"error": "schedule not found"}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"error": "해당 일정을 찾을 수 없습니다."}, status=status.HTTP_404_NOT_FOUND)
     
     schedule.delete()
-    return Response({"message": "Schedule list deleted successfully."})
+    return Response({"message": "해당 일정을 성공적으로 삭제했습니다."})
 
 
 
