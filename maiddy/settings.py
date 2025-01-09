@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "users",
     "diaries",
     "todo",
+    "schedules",
     
 
     # thrid party apps
@@ -92,23 +93,23 @@ WSGI_APPLICATION = "maiddy.wsgi.application"
 from decouple import config # 환경변수 불러오기
 #postgresql 설정 (나중에 .env로 변경)
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql", # postgresql로 변경
-#         "NAME": config("DB_NAME"), # 데이터베이스 이름
-#         "USER": config('DB_USER'), # 데이터베이스 유저
-#         "PASSWORD": config('DB_PASSWORD'), # 데이터베이스 비밀번호
-#         "HOST": config('DB_HOST'), # 데이터베이스 호스트
-#         "PORT": config('DB_PORT'), 
-#     }
-# }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql", # postgresql로 변경
+        "NAME": config("DB_NAME"), # 데이터베이스 이름
+        "USER": config('DB_USER'), # 데이터베이스 유저
+        "PASSWORD": config('DB_PASSWORD'), # 데이터베이스 비밀번호
+        "HOST": config('DB_HOST'), # 데이터베이스 호스트
+        "PORT": config('DB_PORT'), 
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation

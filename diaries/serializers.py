@@ -7,6 +7,6 @@ class DiarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Diary
         fields = ['id', 'user', 'title', 'content', 'select_date']
-        read_only_fields = ['id','user', 'created_at', 'updated_at', 'select_date'] # 유저 정보는 수정 불가능
+        read_only_fields = ['id','user', 'created_at', 'updated_at'] # 유저 정보는 수정 불가능
 
 

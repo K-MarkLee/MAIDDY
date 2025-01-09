@@ -10,6 +10,9 @@ services:
     depends_on: 
       - db # web이 실행 전 db가 실행되어야 함.
 
+    # networks:
+    #   - shared_network
+
     
   db: # db 컨테이너 설정.
     image: postgres:latest # postgres 의 최신 이미지 사용.
@@ -23,6 +26,9 @@ services:
     ports:
       - "5432:5432"
 
+    # networks:
+    #   - shared_network
+
 
   nginx: # nginx 컨테이너 설정. (nginx란 웹 서버 소프트웨어로 정적 파일을 처리하는데 사용.)
     image: nginx:latest # nginx 의 최신 이미지 사용.
@@ -33,6 +39,14 @@ services:
     depends_on:
       - web # nginx가 실행 전 web이 실행되어야 함.
 
+    # networks:
+    #   - shared_network
+
+  # 삭제하세요
+# networks:
+#   shared_network:
+#     driver: bridge
+
 
 volumes:
-  postgres_data: # postgres_data 볼륨 설정.
+  postgres_data: # postgres_data 볼륨 설정
