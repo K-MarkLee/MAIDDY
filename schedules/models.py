@@ -10,4 +10,4 @@ class Schedule(models.Model):
     pinned = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.title
+        return f"{self.title} - {'Pinned' if self.pinned else 'Unpinned'}"
