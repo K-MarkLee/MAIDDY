@@ -23,8 +23,7 @@ def schedule_list(request):
     except ValueError:
         return Response({"error": "날짜 형식이 올바르지 않습니다. YYYY-MM-DD 형식으로 전달해주세요."}, status=status.HTTP_400_BAD_REQUEST)
     
-    today_date = date.today()
-    schedule = Schedule.objects.filter(select_date=today_date, user=request.user).order_by('time')  # 날짜 픽스, 오늘 날짜의 일정의의 시간순으로 정렬
+    schedule = Schedule.objects.filter(select_date=select_date, user=request.user).order_by('time')  # 날짜 픽스, 오늘 날짜의 일정의의 시간순으로 정렬
     serializer = ScheduleListSerializer(schedule, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -69,7 +68,7 @@ def schedule_create(request):
 # 일정표 수정
 @api_view(['PUT'])
 def schedule_update(request):
-    schedule_id = request.data.get('id')
+    schedule_id = request.query_params.get('id') # schedule_id를 query_params로 받아옴
     if not schedule_id:
         return Response({"error": "Schedule ID가 필요합니다."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -110,7 +109,7 @@ def schedule_delete(request, schedule_id):
 @api_view(['PATCH'])
 def schedule_pinned(request):
     date = request.query_params.get('date')
-    schedule_id = request.data.get('id')
+    schedule_id = request.query_params.get('id')
 
     if not date or not schedule_id:
         return Response({"error": "날짜와 일정 ID가 필요합니다."}, status=status.HTTP_400_BAD_REQUEST)
