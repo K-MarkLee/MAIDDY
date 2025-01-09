@@ -12,14 +12,14 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Diary',
+            name='Schedule',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(blank=True, max_length=30, null=True)),
-                ('content', models.TextField()),
+                ('title', models.CharField(max_length=50)),
+                ('content', models.TextField(blank=True, null=True)),
                 ('select_date', models.DateField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                ('time', models.TimeField()),
+                ('pinned', models.BooleanField(default=False)),
             ],
         ),
     ]
