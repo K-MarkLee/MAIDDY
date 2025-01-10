@@ -20,7 +20,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-ax$2n(vri$q^k$ub&qf3fiwm2pccw=slei0=udojge5kx)1&=e"
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'fallback_secret_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -176,6 +180,8 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1), # refresh token 유효 1일
     'ROTATE_REFRESH_TOKENS': True, # refresh token 갱신
     'BLACKLIST_AFTER_ROTATION': True, # refresh token 갱신 후 blacklist
+    'SIGNING_KEY': os.getenv("JWT_SECRET"), # secret key
+    'ALGORITHM': 'HS256',
 }
 
 
