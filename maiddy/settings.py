@@ -20,11 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-from dotenv import load_dotenv
-import os
-load_dotenv()
 
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'fallback_secret_key')
+from decouple import config # 환경변수 불러오기
+
+SECRET_KEY = config("DJANGO_SECRET_KEY", "fallback_secret_key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -94,7 +93,7 @@ WSGI_APPLICATION = "maiddy.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 
-from decouple import config # 환경변수 불러오기
+
 #postgresql 설정 (나중에 .env로 변경)
 
 DATABASES = {
@@ -180,7 +179,7 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1), # refresh token 유효 1일
     'ROTATE_REFRESH_TOKENS': True, # refresh token 갱신
     'BLACKLIST_AFTER_ROTATION': True, # refresh token 갱신 후 blacklist
-    'SIGNING_KEY': os.getenv("JWT_SECRET"), # secret key
+    'SIGNING_KEY': config("JWT_SECRET"), # secret key
     'ALGORITHM': 'HS256',
 }
 

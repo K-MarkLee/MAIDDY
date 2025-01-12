@@ -1,4 +1,4 @@
-version: '3.9' # 도커 컴포즈 버전 설정.
+# version: 3.9 # 도커 컴포즈 버전 설정. (최신버전에서는 삭제)
 services:
   web: # web 컨테이너 설정.
     build: . # 현재 위치의 Dockerfile을 사용하여 이미지를 빌드.
@@ -9,7 +9,6 @@ services:
       - .:/app # 현재 위치를 컨테이너 내부의 /app 으로.
     depends_on: 
       - db # web이 실행 전 db가 실행되어야 함.
-
     networks:
       - shared_network
 
@@ -29,6 +28,14 @@ services:
     networks:
       - shared_network
 
+    command: > # 컨테이너가 시작되면 PostgreSQL을 시작하고 5초 후에 vector 확장을 설치. / vector 확장은 PostgreSQL에서 벡터 데이터를 처리하는 데 사용됨.
+      bash -c "
+      docker-entrypoint.sh postgres &
+      sleep 5 &&
+      psql -U myuser -d mydb -c 'CREATE EXTENSION IF NOT EXISTS vector;' &&
+      wait
+      "
+
 
   nginx: # nginx 컨테이너 설정. (nginx란 웹 서버 소프트웨어로 정적 파일을 처리하는데 사용.)
     image: nginx:latest # nginx 의 최신 이미지 사용.
@@ -38,7 +45,6 @@ services:
       - ./nginx:/etc/nginx/conf.d # 현재 위치의 nginx 디렉토리를 컨테이너 내부의 /etc/nginx/conf.d 로.
     depends_on:
       - web # nginx가 실행 전 web이 실행되어야 함.
-
     networks:
       - shared_network
 
