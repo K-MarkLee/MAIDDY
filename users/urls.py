@@ -20,5 +20,5 @@ urlpatterns = [
 
 
 
-    # path('profile/<str:username>/', views.profile, name='user_profile'),  # 프로필 조회
+    # path('profile/<str:username>/', views.profile, name='user_profile'),  # 프로필 조회?
 ]
