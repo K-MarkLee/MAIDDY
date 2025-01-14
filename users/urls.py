@@ -19,6 +19,5 @@ urlpatterns = [
     path('delete/', views.delete_account, name='user_delete_account'),  # 회원탈퇴
 
 
-
-    # path('profile/<str:username>/', views.profile, name='user_profile'),  # 프로필 조회?
+    # path('profile/<str:username>/', views.profile, name='user_profile'),  # 프로필 조회
 ]

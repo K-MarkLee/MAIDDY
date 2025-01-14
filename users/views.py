@@ -71,7 +71,7 @@ def logout(request):
             return Response({"error": "refresh token이 필요합니다."}, status=status.HTTP_400_BAD_REQUEST)
 
         token = RefreshToken(refresh_token)  # refresh 토큰 생성
-        token.blacklist()  # 토큰 블랙리스트 추가 (블랙리스트 : 토큰 만료되면 로그아웃됨)
+        token.blacklist()  # 토큰 블랙리스트 추가 (블랙리스트 : 토큰 만료되면 로그아웃)
 
         return Response({"message": "로그아웃되었습니다."}, status=status.HTTP_200_OK)
     
