@@ -6,6 +6,12 @@ from django.contrib.auth import get_user_model
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from django.contrib.auth.password_validation import validate_password
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.exceptions import ValidationError
+from django.contrib.auth.hashers import make_password
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from .serializers import ProfileSerializer
 
 
 
@@ -53,34 +59,75 @@ def login(request):
 
 
 
-@api_view(['POST']) # POST 요청만 허용
-@authentication_classes([])  # 인증 비활성화
-@permission_classes([AllowAny])      # 권한 비활성화
+# 로그아웃 API
+@api_view(['POST'])
+@authentication_classes([])  # JWT 인증 비활성화
+@permission_classes([AllowAny])  # 권한 비활성화
 def logout(request):
     try:
-        refresh_token = request.data.get('refresh') # refresh 토큰 가져오기 (refresh 토큰이란 access 토큰을 재발급하는 토큰)
-        
-        token = RefreshToken(refresh_token) # refresh 토큰 생성
-        token.blacklist() # 토큰 블랙리스트 추가 (토큰 만료로 로그아웃 처리)
+        refresh_token = request.data.get('refresh')  # refresh token을 body에서 가져오기
 
-        return Response({"message": "로그아웃되었습니다. "}, status=status.HTTP_200_OK)
+        if not refresh_token:
+            return Response({"error": "refresh token이 필요합니다."}, status=status.HTTP_400_BAD_REQUEST)
+
+        token = RefreshToken(refresh_token)  # refresh 토큰 생성
+        token.blacklist()  # 토큰 블랙리스트 추가 (블랙리스트 : 토큰 만료되면 로그아웃됨)
+
+        return Response({"message": "로그아웃되었습니다."}, status=status.HTTP_200_OK)
     
-    except Exception as e:
-        return Response({"error": "유효하지 않은 토큰 입니다. 로그이웃에 실패하셧습니다. ", "detials":str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as logout_failure:
+        return Response({"error": "로그아웃에 실패하셨습니다.", "details": str(logout_failure)}, status=status.HTTP_400_BAD_REQUEST)
 
 
-# 프로필은 MVP 에서는 제외. 추후에 추가 예정
-# @api_view(['GET']) # GET 요청만 허용
-# def profile(request, username):
-#     if request.method == 'GET': # GET 요청인 경우 프로필 조회
-#         user = get_object_or_404(User, username=username)   
-#         try:
-#             serializer = ProfileSerializer(user)
 
-#         except User.DoesNotExist: # 사용자가 존재하지 않는 경우
-#             return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
-        
-#         return Response(serializer.data, status=status.HTTP_200_OK) 
 
-# # 수정은 프로필 칸 들어가서!!!!! 여기서는 조회만!!!
+
+# 프로필 조회 API
+@api_view(['GET'])
+@authentication_classes([JWTAuthentication])  # JWT 인증 활성화
+def user_profile(request):
+    user = request.user
+    serializer = ProfileSerializer(user)  # ProfileSerializer로 모든 필드를 직렬화
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+# 프로필 수정 API
+@api_view(['PUT'])
+@authentication_classes([JWTAuthentication])  # JWT 인증 활성화
+def update_profile(request):
+    user = request.user
+    serializer = ProfileSerializer(user, data=request.data, partial=True)  # 일부 필드만 수정 가능
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response({
+            "message": f"{user.username}님의 프로필이 수정되었습니다.",
+            "user": serializer.data
+        }, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# 비밀번호 변경 API
+@api_view(['PUT'])
+@authentication_classes([JWTAuthentication])  # JWT 인증 활성화
+def change_password(request):
+    user = request.user
+    current_password = request.data.get('current_password')
+    new_password = request.data.get('new_password')
+
+    if not user.check_password(current_password):
+        return Response({"error": "현재 비밀번호가 올바르지 않습니다."}, status=status.HTTP_400_BAD_REQUEST)
+
+    user.password = make_password(new_password)  # 새 비밀번호 암호화
+    user.save()
+    return Response({"message": "비밀번호가 변경되었습니다."}, status=status.HTTP_200_OK)
+
+# 회원 탈퇴 API
+@api_view(['DELETE'])
+def delete_account(request):
+    user = request.user
+    user.delete()  # 사용자 삭제
+    return Response({"message": "회원탈퇴가 완료되었습니다."}, status=status.HTTP_200_OK)
 

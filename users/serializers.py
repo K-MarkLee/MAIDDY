@@ -26,7 +26,15 @@ class UserCreateSerializer(serializers.ModelSerializer):
         return User.objects.create_user(**validated_data)
 
 
-# class ProfileSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ['email', 'username', 'birth_of_date', 'bio', 'profile_image','gender']
+        
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['email', 'username', 'bio', 'gender', 'profile_image', 'birth_of_date']
+        read_only_fields = ['email', 'username']  # 'email'과 'username'은 수정 불가
+        extra_kwargs = {
+            'bio': {'required': False},  # 'bio'는 수정 가능 (required=False로 필수 아님)
+            'gender': {'required': False},  # 'gender'는 수정 가능
+            'profile_image': {'required': False},  # 'profile_image'는 수정 가능
+            'birth_of_date': {'required': False},  # 'birth_of_date'는 수정 가능
+        }

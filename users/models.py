@@ -1,10 +1,19 @@
 from django.db import models
 from django.core.validators import MinLengthValidator
-from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 
+
+class GenderChoices(models.TextChoices):
+    MALE = 'M', '남성'
+    FEMALE = 'F', '여성'
+    NONE = 'NONE', '답변하지 않음'
+    
+    
+    
 # 사용자 생성 및 관련 메서드 정의하는 모델 매니저 
 # 메서드는 create_user와 create_superuser
 # 일반 사용자 및 관리자 계정을 생성할 것.
+
 class UserManager(BaseUserManager): 
     def create_user(self, username, email, password=None, **extra_fields): # password=None은 기본값이 None이라는 뜻 / **extra_fields는 추가 필드를 받기 위함
         if not email:  # 이메일이 없는 경우 에러 발생
@@ -38,27 +47,16 @@ class UserManager(BaseUserManager):
 
 
 # 사용자 모델
-# AbstractUser를 상속받아서 아래 것들 추가
-class User(AbstractUser, PermissionsMixin):
-
-    # 프로필 필드 (구현시 사용 예정)
-    # class GenderChoices(models.TextChoices):  # 성별 선택
-    #     MALE = 'M', 'Male'
-    #     FEMALE = 'F', 'Female'
-    #     NONE = 'NONE', 'Prefer not to answer' #이거 한글로 적으면 안되나요?
-
-    email = models.EmailField(max_length=50, unique=True)  #이메일 필드
-    username = models.CharField(max_length=30, unique=True, validators=[MinLengthValidator(3)])  # 아이디로 사용할 username 필드 / 최소 3글자 이상
-
-    # 프로필 필드 (구현시 사용 예정)
-    # birth_of_date = models.DateField(null=True, blank=True)  #생년월일(선택)
-    # bio = models.TextField(blank=True, null=True)  #자기소개(선택)
-    # profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True)  # 프로필 이미지(선택)
-    # gender = models.CharField(max_length=10, choices=GenderChoices.choices, null=True, blank=True)  # 성별(선택)
+class User(AbstractUser):
+    email = models.EmailField(max_length=50, unique=True)#이메일 필드
+    username = models.CharField(max_length=30, unique=True, validators=[MinLengthValidator(3)]) # 아이디로 사용할 username 필드 / 최소 3글자 이상
+    bio = models.TextField(blank=True, null=True) #자기소개(선택)
+    profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True) # 프로필 이미지(선택)
+    birth_of_date = models.DateField(null=True, blank=True) #생년월일(선택)
+    gender = models.CharField(max_length=10, choices=GenderChoices.choices, null=True, blank=True) # 성별(선택)
 
 
-    objects = UserManager()  # UserManager 사용
-
+    objects = UserManager()  # 사용자 매니저 사용
     USERNAME_FIELD = 'email'  # 로그인 시 이메일 사용
     REQUIRED_FIELDS = ['username']  # 필수 입력 필드(email은 기본 제공되기에 생략함)
 

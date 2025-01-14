@@ -24,11 +24,15 @@ def diary_detail(request):
         return Response(serializer.data, status=status.HTTP_200_OK) # 직렬화된 데이터 반환
     
     except Diary.DoesNotExist: # 다이어리가 없을 경우
-        return Response({"error": "다이어리를 찾을 수 없습니다."}, status=status.HTTP_404_NOT_FOUND) # 오류 반환
+        return Response(
+            {"error": "다이어리를 찾을 수 없습니다."}, 
+            status=status.HTTP_404_NOT_FOUND) # 오류 반환
 
 
 
-# 다이어리 작성 
+
+
+
 @api_view(['POST'])
 def diary_update(request): # 생성 및 수정
     date = request.data.get('select_date') # 날짜를 받아옴
@@ -38,7 +42,7 @@ def diary_update(request): # 생성 및 수정
     try:
         select_date = datetime.strptime(date, "%Y-%m-%d").date() # 날짜 형식 변환
     except ValueError:
-        return Response({"error": "날짜 형식이 올바르지 않습니다. YYYY-MM-DD 형식으로 전달해주세요."}, status=status.HTTP_400_BAD_REQUEST)
+       return Response({"error": "날짜 형식이 올바르지 않습니다. YYYY-MM-DD 형식으로 전달해주세요."}, status=status.HTTP_400_BAD_REQUEST)
     
 
     try:
