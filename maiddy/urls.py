@@ -17,6 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from .views import ChatbotAPIView, FeedbackAPIView, RecommendAPIView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -24,4 +25,8 @@ urlpatterns = [
     path("api/diaries/", include('diaries.urls')),
     path("api/todo/", include('todo.urls')),
     path("api/schedules/", include('schedules.urls')),
+
+    path('api/chatbot/chat/', ChatbotAPIView.as_view(), name='chatbot'),
+    path('api/feedback/', FeedbackAPIView.as_view(), name='feedback'),
+    path('api/recommend/', RecommendAPIView.as_view(), name='recommend'),
 ]

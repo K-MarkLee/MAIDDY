@@ -179,8 +179,6 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1), # refresh token 유효 1일
     'ROTATE_REFRESH_TOKENS': True, # refresh token 갱신
     'BLACKLIST_AFTER_ROTATION': True, # refresh token 갱신 후 blacklist
-    'SIGNING_KEY': config("JWT_SECRET"), # secret key
-    'ALGORITHM': 'HS256',
 }
 
 
