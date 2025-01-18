@@ -18,9 +18,9 @@ class ChatbotAPIView(APIView):
         
         try:
             ai_response = requests.post(
-                'http://maiddy_ai:5000/chatbot/chat',
-                headers={'user_id': str(authenticated_user_id)},  # 인증된 ID 사용
+                'http://maiddy_ai:5000/chatbot/',
                 json={
+                    'user_id': authenticated_user_id,
                     'query': query
                 }
             )
@@ -38,6 +38,7 @@ class ChatbotAPIView(APIView):
                 {"error": f"AI 서버 통신 오류: {str(e)}"}, 
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+        
 
 class FeedbackAPIView(APIView):
     def post(self, request):
@@ -73,6 +74,7 @@ class FeedbackAPIView(APIView):
                 {"error": f"AI 서버 통신 오류: {str(e)}"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+        
 
 class RecommendAPIView(APIView):
     def post(self, request):
