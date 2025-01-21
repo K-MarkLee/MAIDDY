@@ -176,7 +176,7 @@ from datetime import timedelta
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1), # access token 1일 유효
-    'REFRESH_TOKEN_LIFETIME': timedelta(months=1), # refresh token 유효 1달
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30), # refresh token 유효 1달
     'ROTATE_REFRESH_TOKENS': True, # refresh token 갱신
     'BLACKLIST_AFTER_ROTATION': True, # refresh token 갱신 후 blacklist
 }
@@ -185,3 +185,29 @@ SIMPLE_JWT = {
 # Media 설정
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+# 프론트 연결 코드임!!
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
