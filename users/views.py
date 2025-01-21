@@ -50,37 +50,3 @@ def login(request):
     else:
         # 인증 실패
         return Response({"error": "로그인 정보가 올바르지 않습니다. 다시한번 확인해주세요."}, status=status.HTTP_401_UNAUTHORIZED)
-
-
-
-@api_view(['POST']) # POST 요청만 허용
-@authentication_classes([])  # 인증 비활성화
-@permission_classes([AllowAny])      # 권한 비활성화
-def logout(request):
-    try:
-        refresh_token = request.data.get('refresh') # refresh 토큰 가져오기 (refresh 토큰이란 access 토큰을 재발급하는 토큰)
-        
-        token = RefreshToken(refresh_token) # refresh 토큰 생성
-        token.blacklist() # 토큰 블랙리스트 추가 (토큰 만료로 로그아웃 처리)
-
-        return Response({"message": "로그아웃되었습니다. "}, status=status.HTTP_200_OK)
-    
-    except Exception as e:
-        return Response({"error": "유효하지 않은 토큰 입니다. 로그이웃에 실패하셧습니다. ", "detials":str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
-
-# 프로필은 MVP 에서는 제외. 추후에 추가 예정
-# @api_view(['GET']) # GET 요청만 허용
-# def profile(request, username):
-#     if request.method == 'GET': # GET 요청인 경우 프로필 조회
-#         user = get_object_or_404(User, username=username)   
-#         try:
-#             serializer = ProfileSerializer(user)
-
-#         except User.DoesNotExist: # 사용자가 존재하지 않는 경우
-#             return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
-        
-#         return Response(serializer.data, status=status.HTTP_200_OK) 
-
-# # 수정은 프로필 칸 들어가서!!!!! 여기서는 조회만!!!
-

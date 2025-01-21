@@ -12,7 +12,6 @@ class UserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['email', 'username', 'password', 'password2'] #MVP용
-        # fields = ['email', 'username', 'password', 'password2', 'birth_of_date', 'bio', 'gender', 'profile_image'] 프로필용
     
 
     def validate(self, data): # 회원가입시 비밀번호 확인
@@ -25,8 +24,3 @@ class UserCreateSerializer(serializers.ModelSerializer):
         validated_data.pop('password2') # password2 필드 삭제
         return User.objects.create_user(**validated_data)
 
-
-# class ProfileSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ['email', 'username', 'birth_of_date', 'bio', 'profile_image','gender']

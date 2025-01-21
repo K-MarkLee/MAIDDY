@@ -40,22 +40,8 @@ class UserManager(BaseUserManager):
 # 사용자 모델
 # AbstractUser를 상속받아서 아래 것들 추가
 class User(AbstractUser, PermissionsMixin):
-
-    # 프로필 필드 (구현시 사용 예정)
-    # class GenderChoices(models.TextChoices):  # 성별 선택
-    #     MALE = 'M', 'Male'
-    #     FEMALE = 'F', 'Female'
-    #     NONE = 'NONE', 'Prefer not to answer' #이거 한글로 적으면 안되나요?
-
     email = models.EmailField(max_length=50, unique=True)  #이메일 필드
-    username = models.CharField(max_length=30, unique=True, validators=[MinLengthValidator(3)])  # 아이디로 사용할 username 필드 / 최소 3글자 이상
-
-    # 프로필 필드 (구현시 사용 예정)
-    # birth_of_date = models.DateField(null=True, blank=True)  #생년월일(선택)
-    # bio = models.TextField(blank=True, null=True)  #자기소개(선택)
-    # profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True)  # 프로필 이미지(선택)
-    # gender = models.CharField(max_length=10, choices=GenderChoices.choices, null=True, blank=True)  # 성별(선택)
-
+    username = models.CharField(max_length=30, unique=True, validators=[MinLengthValidator(3)])  # username 필드 / 최소 3글자 이상
 
     objects = UserManager()  # UserManager 사용
 

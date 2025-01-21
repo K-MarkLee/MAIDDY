@@ -76,10 +76,10 @@ def todo_delete(request, todo_id):
     try:
         todo = Todo.objects.get(pk=todo_id, user=request.user) # 유저의 할 일만 삭제 가능하도록
     except Todo.DoesNotExist:
-        return Response({"error": "Todo not found"}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"error": "Todo를 찾을 수 없습니다."}, status=status.HTTP_404_NOT_FOUND)
     
     todo.delete()
-    return Response({"message": "Todo list deleted successfully."})
+    return Response({"message": "Todo 리스트를 성공적으로 삭제했습니다."})
 
 
 

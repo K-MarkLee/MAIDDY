@@ -52,11 +52,14 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist", # 로그아웃 시 blacklist 넣어서 토큰 만료
+
+    "corsheaders",
 ]
 
 AUTH_USER_MODEL = 'users.User' # 사용자 모델 변경
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # 프론트 연결코드 반드시 CommonMiddleware 전에 위치
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
