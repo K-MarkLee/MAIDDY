@@ -14,14 +14,14 @@ class ChatbotAPIView(APIView):
         if str(authenticated_user_id) != str(requested_user_id):
             raise PermissionDenied("다른 사용자의 데이터에 접근할 수 없습니다.")
         
-        query = request.data.get("query")
+        question = request.data.get("question")
         
         try:
             ai_response = requests.post(
-                'http://maiddy_ai:5000/chatbot/',
+                'http://maiddy_ai:5001/chatbot/',
                 json={
                     'user_id': authenticated_user_id,
-                    'query': query
+                    'question': question
                 }
             )
             
@@ -54,7 +54,7 @@ class FeedbackAPIView(APIView):
         
         try:
             ai_response = requests.post(
-                'http://maiddy_ai:5000/feedback/',
+                'http://maiddy_ai:5001/feedback/',
                 json={
                     'user_id': authenticated_user_id,
                     'select_date': select_date  # AI 서비스는 'date'로 받고 있음
@@ -85,10 +85,9 @@ class RecommendAPIView(APIView):
         if str(authenticated_user_id) != str(requested_user_id):
             raise PermissionDenied("다른 사용자의 데이터에 접근할 수 없습니다.")
         
-        
         try:
-            ai_response = requests.get(
-                'http://maiddy_ai:5000/recommend/',
+            ai_response = requests.post(
+                'http://maiddy_ai:5001/recommend/',
                 json={'user_id': authenticated_user_id}
             )
             

@@ -14,14 +14,16 @@ services:
 
     
   db: # db 컨테이너 설정.
-    image: postgres:latest # postgres 의 최신 이미지 사용.
+    image: ankane/pgvector:latest # pgvector가 설치된 PostgreSQL 이미지 사용
     volumes:
       - postgres_data:/var/lib/postgresql/data 
+      - ./init-scripts:/docker-entrypoint-initdb.d # 초기화 스크립트 디렉토리
     environment: # .env 파일에 있는 환경변수를 사용.
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_HOST: ${DB_HOST}
+      POSTGRES_SHARED_PRELOAD_LIBRARIES: "pgvector"
     ports:
       - "5432:5432"
 
@@ -33,13 +35,12 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx:/etc/nginx/conf.d # 현재 위치의 nginx 디렉토리를 컨테이너 내부의 /etc/nginx/conf.d 로.
+      - ./nginx:/etc/nginx/conf.d # 현재 위치의 nginx 디렉토리를 컨테이너 내부의 /etc/nginx/conf.d 로
     depends_on:
-      - web # nginx가 실행 전 web이 실행되어야 함.
+      - web # nginx가 실행 전 web이 실행되어야 함
     networks:
       - shared_network
 
-  # 삭제하세요
 networks:
   shared_network:
     driver: bridge
