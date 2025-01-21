@@ -37,7 +37,7 @@ services:
     volumes:
       - ./nginx:/etc/nginx/conf.d # 현재 위치의 nginx 디렉토리를 컨테이너 내부의 /etc/nginx/conf.d 로
     depends_on:
-      - web # nginx가 실행 전 web이 실행되어야 함
+      - web # nginx가 실행 전 web이 실행되어야.ham
     networks:
       - shared_network
 
