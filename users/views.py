@@ -17,14 +17,17 @@ User = get_user_model()
 @authentication_classes([])  # 인증 비활성화
 @permission_classes([AllowAny])      # 권한 비활성화
 def user_create(request):
-    serializer = UserCreateSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response({
-            "message": f"{serializer.data['username']}님 회원가입이 정상적으로 완료되었습니다.",
-            "user": serializer.data
-        }, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    try:
+        serializer = UserCreateSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({
+                "message": f"{serializer.data['username']}님 회원가입이 정상적으로 완료되었습니다.",
+                "user": serializer.data
+            }, status=status.HTTP_201_CREATED)
+        return Response({"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 
