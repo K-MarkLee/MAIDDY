@@ -26,11 +26,41 @@ from decouple import config # 환경변수 불러오기
 SECRET_KEY = config("DJANGO_SECRET_KEY", "fallback_secret_key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
-    "43.200.166.176",
-    "maiddy.co.kr"
+    "maiddy.co.kr",
+    "3.34.248.120"
+]
+
+# CORS 설정
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "http://maiddy.co.kr",
+    "http://3.34.248.120",
+    "http://localhost:3000",
+]
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
 ]
 
 
@@ -191,30 +221,3 @@ SIMPLE_JWT = {
 # Media 설정
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
-
-# 프론트 연결 코드임!!
-CORS_ALLOWED_ORIGINS = [
-    "http://maiddy.co.kr:3000",
-    "http://localhost:3000",
-]
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_METHODS = [
-    'DELETE',
-    'GET',
-    'OPTIONS',
-    'PATCH',
-    'POST',
-    'PUT',
-]
-CORS_ALLOW_HEADERS = [
-    'accept',
-    'accept-encoding',
-    'authorization',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-]
