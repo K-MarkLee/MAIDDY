@@ -26,7 +26,7 @@ from decouple import config # 환경변수 불러오기
 SECRET_KEY = config("DJANGO_SECRET_KEY", "fallback_secret_key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     "15.164.212.184"
