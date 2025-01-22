@@ -29,7 +29,7 @@ SECRET_KEY = config("DJANGO_SECRET_KEY", "fallback_secret_key")
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "54.180.122.189"
+    "15.164.212.184"
 ]
 
 
