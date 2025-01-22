@@ -194,7 +194,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # 프론트 연결 코드임!!
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "http://maiddy.co.kr:3000",
 ]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = [
