@@ -29,7 +29,8 @@ SECRET_KEY = config("DJANGO_SECRET_KEY", "fallback_secret_key")
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "43.200.166.176"
+    "43.200.166.176",
+    "maiddy.co.kr"
 ]
 
 
