@@ -31,7 +31,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "maiddy.co.kr",
     "3.34.248.120",           # 프론트엔드 IP
-    "43.200.166.176"          # 백엔드 IP도 추가
+    "43.200.166.176",          # 백엔드 IP도 추가
+    "maiddy.co.kr:3000"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -40,7 +41,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://maiddy.co.kr",    # 포트 3000 제거 (nginx가 80포트로 프록시)
     "http://3.34.248.120",    # 프론트엔드 IP
     "http://localhost:3000",  # 로컬 개발용
-    "http://43.200.166.176:8000"  # 백엔드 IP:포트
+    "http://43.200.166.176:8000",  # 백엔드 IP:포트
+    "http://maiddy.co.kr:3000"
 ]
 
 CORS_ALLOW_METHODS = [
