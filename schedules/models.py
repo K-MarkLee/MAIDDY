@@ -8,6 +8,7 @@ class Schedule(models.Model):
     select_date = models.DateField(blank=False)  #반드시 날짜가 입력
     time = models.TimeField()
     pinned = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.title} - {'Pinned' if self.pinned else 'Unpinned'}"
