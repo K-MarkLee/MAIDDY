@@ -184,7 +184,7 @@ To set up and run the project, follow these steps:
 
 <a name="architecture"></a>
 ## 🌐 Architecture
-![Image](https://github.com/user-attachments/assets/cc9c49b1-0b30-4707-b8a2-41b2d55b970b)
+![Image](https://github.com/user-attachments/assets/4b57876a-6f81-49a9-a639-11c70f576bcd)
 
 <br>
 
