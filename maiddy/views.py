@@ -18,7 +18,7 @@ class ChatbotAPIView(APIView):
         
         try:
             ai_response = requests.post(
-                'http://maiddy_ai:5001/chatbot/',
+                'http://localhost:5001/chatbot/',
                 json={
                     'user_id': authenticated_user_id,
                     'question': question
@@ -54,7 +54,7 @@ class FeedbackAPIView(APIView):
         
         try:
             ai_response = requests.post(
-                'http://maiddy_ai:5001/feedback/',
+                'http://localhost:5001/feedback/',
                 json={
                     'user_id': authenticated_user_id,
                     'select_date': select_date  # AI 서비스는 'date'로 받고 있음
@@ -87,7 +87,7 @@ class RecommendAPIView(APIView):
         
         try:
             ai_response = requests.post(
-                'http://maiddy_ai:5001/recommend/',
+                'http://localhost:5001/recommend/',
                 json={'user_id': authenticated_user_id}
             )
             

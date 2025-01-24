@@ -30,7 +30,7 @@ services:
       - shared_network
 
 networks:
-  shared_network:
+  shared_network:애차
     driver: bridge
 
 volumes:
