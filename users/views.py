@@ -78,5 +78,13 @@ def delete_account(request):
     if not user:
         return Response({"error": "회원 정보를 찾을 수 없습니다."}, status=status.HTTP_404_NOT_FOUND)
     
+    # 비밀번호 검증
+    password = request.data.get('password')
+    if not password:
+        return Response({"error": "비밀번호를 입력해주세요."}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if not user.check_password(password):
+        return Response({"error": "비밀번호가 일치하지 않습니다."}, status=status.HTTP_401_UNAUTHORIZED)
+    
     user.delete()
     return Response({"message": "회원 탈퇴가 완료되었습니다."}, status=status.HTTP_200_OK)
