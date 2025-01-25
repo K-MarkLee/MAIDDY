@@ -61,7 +61,7 @@ def logout(request):
         refresh_token = request.data['refresh']
 
         if not refresh_token:
-            return Response({"error": "Refresh token가 필요입니다."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "Refresh token가 필요합니다."}, status=status.HTTP_400_BAD_REQUEST)
 
         token = RefreshToken(refresh_token)
         token.blacklist()
@@ -69,3 +69,14 @@ def logout(request):
     
     except Exception as e:
         return Response({"error": "로그아웃 실패", "detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+# 회원탈퇴
+@api_view(['DELETE'])
+def delete_account(request):
+    user = request.user
+    if not user:
+        return Response({"error": "회원 정보를 찾을 수 없습니다."}, status=status.HTTP_404_NOT_FOUND)
+    
+    user.delete()
+    return Response({"message": "회원 탈퇴가 완료되었습니다."}, status=status.HTTP_200_OK)
