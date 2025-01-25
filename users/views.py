@@ -50,3 +50,22 @@ def login(request):
     else:
         # 인증 실패
         return Response({"error": "로그인 정보가 올바르지 않습니다. 다시한번 확인해주세요."}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+# 로그아웃
+@api_view(['POST'])
+@authentication_classes([])
+@permission_classes([AllowAny])
+def logout(request):
+    try:
+        refresh_token = request.data['refresh']
+
+        if not refresh_token:
+            return Response({"error": "Refresh token가 필요입니다."}, status=status.HTTP_400_BAD_REQUEST)
+
+        token = RefreshToken(refresh_token)
+        token.blacklist()
+        return Response({"message": "로그아웃 성공"}, status=status.HTTP_200_OK)
+    
+    except Exception as e:
+        return Response({"error": "로그아웃 실패", "detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
