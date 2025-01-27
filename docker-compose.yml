@@ -7,6 +7,9 @@ services:
       - "8000:8000"
     volumes:
       - .:/app # 현재 위치를 컨테이너 내부의 /app 으로.
+    environment:
+      - FRONTEND_IP=${FRONTEND_IP}
+      - BACKEND_IP=${BACKEND_IP}
     depends_on: 
       - db # web이 실행 전 db가 실행되어야 함.
     networks:
