@@ -26,7 +26,7 @@ urlpatterns = [
     path("api/todo/", include('todo.urls')),
     path("api/schedules/", include('schedules.urls')),
   
-
+  
     path('ai/chatbot/', ChatbotAPIView.as_view(), name='chatbot'),
     path('ai/feedback/', FeedbackAPIView.as_view(), name='feedback'),
     path('ai/recommend/', RecommendAPIView.as_view(), name='recommend'),
