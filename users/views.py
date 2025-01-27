@@ -1,3 +1,11 @@
+from django.contrib.auth import authenticate, get_user_model
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.tokens import RefreshToken
+from .serializers import UserCreateSerializer
+from maiddy.models import Feedback
 from rest_framework import status
 from .serializers import UserCreateSerializer
 from rest_framework.response import Response
@@ -86,5 +94,11 @@ def delete_account(request):
     if not user.check_password(password):
         return Response({"error": "비밀번호가 일치하지 않습니다."}, status=status.HTTP_401_UNAUTHORIZED)
     
-    user.delete()
-    return Response({"message": "회원 탈퇴가 완료되었습니다."}, status=status.HTTP_200_OK)
+    try:
+        # 현재 사용자의 모든 토큰 무효화 (로그아웃)
+        RefreshToken.for_user(user).blacklist()
+        # 사용자 삭제
+        user.delete()
+        return Response({"message": "회원 탈퇴가 완료되었습니다."}, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({"error": f"회원 탈퇴 중 오류가 발생했습니다: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
