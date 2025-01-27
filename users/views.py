@@ -5,7 +5,6 @@ from rest_framework.decorators import api_view, permission_classes, authenticati
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UserCreateSerializer
-from maiddy.models import Feedback
 from rest_framework import status
 from .serializers import UserCreateSerializer
 from rest_framework.response import Response
