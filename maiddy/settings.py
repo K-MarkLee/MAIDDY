@@ -27,11 +27,13 @@ SECRET_KEY = config("DJANGO_SECRET_KEY", "fallback_secret_key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+Frontend_IP = config("FRONTEND_IP")
+Backend_IP = config("BACKEND_IP")
 
 ALLOWED_HOSTS = [
     "maiddy.co.kr",
-    "3.34.248.120",           # 프론트엔드 IP
-    "43.200.166.176",          # 백엔드 IP도 추가
+    Frontend_IP,         # 프론트엔드 IP
+    Backend_IP,          # 백엔드 IP도 추가
     "maiddy.co.kr:3000",
     "maiddy_ai:5001"
 ]
@@ -40,9 +42,9 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://maiddy.co.kr",    # 포트 3000 제거 (nginx가 80포트로 프록시)
-    "http://3.34.248.120",    # 프론트엔드 IP
+    f"http://{Frontend_IP}",    # 프론트엔드 IP
     "http://localhost:3000",  # 로컬 개발용
-    "http://43.200.166.176:8000",  # 백엔드 IP:포트
+    f"http://{Backend_IP}:8000",  # 백엔드 IP:포트
     "http://maiddy.co.kr:3000",
     "http://maiddy_ai:5001"
 ]
