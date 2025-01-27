@@ -36,7 +36,7 @@ ALLOWED_HOSTS = [
     BACKEND_IP,            # 백엔드 IP도 추가
     "maiddy.co.kr:3000",
     "maiddy_ai:5001",
-    "api.maiddy.co.kr:8000"
+    "api.maiddy.co.kr"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
