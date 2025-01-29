@@ -2,51 +2,46 @@ from django.db import models
 from django.core.validators import MinLengthValidator
 from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
 
-# 사용자 생성 및 관련 메서드 정의하는 모델 매니저 
-# 메서드는 create_user와 create_superuser
-# 일반 사용자 및 관리자 계정을 생성할 것.
 class UserManager(BaseUserManager): 
-    def create_user(self, username, email, password=None, **extra_fields): # password=None은 기본값이 None이라는 뜻 / **extra_fields는 추가 필드를 받기 위함
-        if not email:  # 이메일이 없는 경우 에러 발생
+    def create_user(self, username, email, password=None, **extra_fields):
+        if not email: 
             raise ValueError('이메일이 필요합니다.')
         
-        if not username:  # 사용자 이름이 없는 경우 에러 발생생
+        if not username: 
             raise ValueError('유저이름이 필요합니다.')
 
-        user = self.model( # 사용자 생성
-            email=self.normalize_email(email),  # 이메일 소문자로 변경
-            username=username,  # 사용자 이름
-            **extra_fields # 추가 필드
+        user = self.model( 
+            email=self.normalize_email(email),  
+            username=username,  
+            **extra_fields 
         )
 
-        user.set_password(password)  # 비밀번호 설정(암호화)
-        user.save(using=self._db)  # DB에 저장(여러 데이터베이스를 사용하는 경우 필요)
+        user.set_password(password) 
+        user.save(using=self._db)  
         return user
 
 
     def create_superuser(self, email, username, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)  # 스태프 권한 부여
-        extra_fields.setdefault('is_superuser', True)  # 슈퍼유저 권한 부여
+        extra_fields.setdefault('is_staff', True)  
+        extra_fields.setdefault('is_superuser', True)  
 
-        if extra_fields.get('is_staff') is not True:  # 스태프 권한이 없는 경우
+        if extra_fields.get('is_staff') is not True:  
             raise ValueError('스태프는 is_staff=True 여야 합니다.')
         
-        if extra_fields.get('is_superuser') is not True:  # 슈퍼유저 권한이 없는 경우
+        if extra_fields.get('is_superuser') is not True:  
             raise ValueError('관리자는 is_superuser=True 여야 합니다.')
 
         return self.create_user(email=email, username=username, password=password, **extra_fields)
 
 
-# 사용자 모델
-# AbstractUser를 상속받아서 아래 것들 추가
 class User(AbstractUser, PermissionsMixin):
-    email = models.EmailField(max_length=50, unique=True)  #이메일 필드
-    username = models.CharField(max_length=30, unique=True, validators=[MinLengthValidator(3)])  # username 필드 / 최소 3글자 이상
+    email = models.EmailField(max_length=50, unique=True)  
+    username = models.CharField(max_length=30, unique=True, validators=[MinLengthValidator(3)])  
 
-    objects = UserManager()  # UserManager 사용
+    objects = UserManager()  
 
-    USERNAME_FIELD = 'email'  # 로그인 시 이메일 사용
-    REQUIRED_FIELDS = ['username']  # 필수 입력 필드(email은 기본 제공되기에 생략함)
+    USERNAME_FIELD = 'email'  
+    REQUIRED_FIELDS = ['username']  
 
     def __str__(self):
         return self.username
