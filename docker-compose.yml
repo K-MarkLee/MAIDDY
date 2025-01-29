@@ -1,0 +1,39 @@
+services:
+  web: 
+    build: . 
+    command: gunicorn maiddy.wsgi:application --bind 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - FRONTEND_IP=${FRONTEND_IP}
+      - BACKEND_IP=${BACKEND_IP}
+    depends_on: 
+      - db
+    networks:
+      - shared_network
+
+  db: 
+    image: ankane/pgvector:latest 
+    volumes:
+      - postgres_data:/var/lib/postgresql/data 
+      - ./init-scripts:/docker-entrypoint-initdb.d 
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_HOST: ${DB_HOST}
+
+      POSTGRES_SHARED_PRELOAD_LIBRARIES: "pgvector"
+    ports:
+      - "5432:5432"
+    networks:
+      - shared_network
+
+networks:
+  shared_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
