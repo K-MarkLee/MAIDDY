@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 from django.db import models
 from django.core.validators import MinLengthValidator
 from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
@@ -47,4 +45,3 @@ class User(AbstractUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
->>>>>>> mvp

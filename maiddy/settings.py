@@ -142,16 +142,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us" 
 
-<<<<<<< HEAD
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
-
-LANGUAGE_CODE = "en-us" # 영어 > 한국어 : 문제 생길시 변경
-
-TIME_ZONE = "UTC"
-=======
 TIME_ZONE = "Asia/Seoul"
->>>>>>> mvp
+
 
 USE_I18N = True
 
