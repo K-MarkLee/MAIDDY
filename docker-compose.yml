@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 services:
   web: 
     build: . 
@@ -21,31 +20,11 @@ services:
       - postgres_data:/var/lib/postgresql/data 
       - ./init-scripts:/docker-entrypoint-initdb.d 
     environment:
-=======
-version: '3.9' # 도커 컴포즈 버전 설정.
-services:
-  web: # web 컨테이너 설정.
-    build: . # 현재 위치의 Dockerfile을 사용하여 이미지를 빌드.
-    command: gunicorn maiddy.wsgi:application --bind 0.0.0.0:8000 # 컨테이너가 시작될 때 실행할 명령어. (gunicorn 실행)
-    ports:
-      - "8000:8000"
-    volumes:
-      - .:/app # 현재 위치를 컨테이너 내부의 /app 으로.
-    depends_on: 
-      - db # web이 실행 전 db가 실행되어야 함.
-
-    
-  db: # db 컨테이너 설정.
-    image: postgres:latest # postgres 의 최신 이미지 사용.
-    volumes:
-      - postgres_data:/var/lib/postgresql/data 
-    environment: # .env 파일에 있는 환경변수를 사용.
->>>>>>> b8d4166934577aedf06382d610ebf061aa7476af
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_HOST: ${DB_HOST}
-<<<<<<< HEAD
+
       POSTGRES_SHARED_PRELOAD_LIBRARIES: "pgvector"
     ports:
       - "5432:5432"
@@ -58,19 +37,3 @@ networks:
 
 volumes:
   postgres_data:
-=======
-
-
-  nginx: # nginx 컨테이너 설정. (nginx란 웹 서버 소프트웨어로 정적 파일을 처리하는데 사용.)
-    image: nginx:latest # nginx 의 최신 이미지 사용.
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx:/etc/nginx/conf.d # 현재 위치의 nginx 디렉토리를 컨테이너 내부의 /etc/nginx/conf.d 로.
-    depends_on:
-      - web # nginx가 실행 전 web이 실행되어야 함.
-
-
-volumes:
-  postgres_data: # postgres_data 볼륨 설정.
->>>>>>> b8d4166934577aedf06382d610ebf061aa7476af
