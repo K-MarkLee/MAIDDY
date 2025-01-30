@@ -12,7 +12,7 @@
 <br>
 
 #### [🤖 AI REPOSITORY] (https://github.com/K-MarkLee/MAIDDY_AI)
-#### [🖥️ FRONT REPOSITORY] ((https://github.com/K-MarkLee/MAIDDY_Front)
+#### [🖥️ FRONT REPOSITORY] (https://github.com/K-MarkLee/MAIDDY_Front)
 ---
 #### [📝 SA Documents] (https://www.notion.so/teamsparta/Young-POTY-SA-1882dc3ef51480cb8187c9e556dc24a6)
 #### [👊 Team Notion] (https://www.notion.so/teamsparta/Young-POTY-16c2dc3ef514818982acc5fa7fdc4f07)
