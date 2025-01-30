@@ -14,9 +14,9 @@
 #### [🤖 AI REPOSITORY] (https://github.com/K-MarkLee/MAIDDY_AI)
 #### [🖥️ FRONT REPOSITORY] ((https://github.com/K-MarkLee/MAIDDY_Front)
 ---
-#### [📝 SA 문서 바로가기] (https://www.notion.so/teamsparta/Young-POTY-SA-636a5824bd96466bafb740b6b1cf9ff7)
-#### [👊 팀 노션 바로가기] (https://www.notion.so/teamsparta/Young-POTY-16c2dc3ef514818982acc5fa7fdc4f07)
-#### [🌟 프로젝트 브로셔 보러가기] (https://teamsparta.notion.site/AI-8-1702dc3ef514803cbc3ef17621bcaa08?p=1702dc3ef514807fa915e4fe04cd99ba&pm=c)
+#### [📝 SA Documents] (https://www.notion.so/teamsparta/Young-POTY-SA-1882dc3ef51480cb8187c9e556dc24a6)
+#### [👊 Team Notion] (https://www.notion.so/teamsparta/Young-POTY-16c2dc3ef514818982acc5fa7fdc4f07)
+#### [🌟 Project Brochure] (https://teamsparta.notion.site/AI-8-1702dc3ef514803cbc3ef17621bcaa08?p=1702dc3ef514807fa915e4fe04cd99ba&pm=c)
 
 <br>
 
