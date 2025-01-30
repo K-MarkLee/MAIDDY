@@ -56,52 +56,74 @@
 
 <a name="setup"></a>
 ## 2. 🛠 Setup  (프로젝트 설치 및 실행 방법, 필요한 환경 설정 등 작성 부탁)
+AI set up is on AI repository
+
+  
 To set up and run the project, follow these steps:
+
+### Frontend
 
 1. Clone the project repository:
 
-    ```bash
-
+    ```
+    https://github.com/K-MarkLee/MAIDDY_Front/
     ```
 
 2. Navigate to the project directory:
 
-    ```bash
- 
+    ```
+    cd MAIDDY_Front/frontend/my-diary-app
     ```
 
-3. **Install the required dependencies:**
-
-    ```bash
-  
-    ```
-
-4. **Create and configure the `config.py` file:**
+3. **Create `.env` file:**
 
     Create a file named `config.py` in the project root directory and add the following content:
 
-    ```python
-    # config.py
-
-
+    ```
+    NEXT_PUBLIC_API_URL, NEXT_PUBLIC_FRONTEND_URL
     ```
 
-5. **Apply database migrations:**
-
-    ```bash
-  
-    ```
-
-6. **Run the development server:**
-
-    ```bash
+4. **Run the docker:**
 
     ```
+    docker-compose up --build
+    ```
 
-7. **Open your browser and visit:**
+---
+### Backend
 
-    ```bash
+1. Clone the project repository:
+    ```
+    https://github.com/K-MarkLee/MAIDDY/
+    ```
 
+2. Navigate to the projec directory:
+    ```
+    cd MAIDDY
+    ```
+    
+3. **Create `.env` file:**
+    Create a file named `.env` in the project root directory and add the following content:
+    ```
+    DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DATABASE_URL, FRONTENT_IP, BACKEND_IP
+    ```
+
+4. **Run the docker:**
+    ```
+    docker-compose up --build
+    ```
+
+
+
+5. Apply database migration
+    ```
+    docker-compose exec web python manage.py makemigrations
+    docker-compose exec web python manage.py migrate
+    ```
+    
+6. Connect to address
+    ```
+    maiddy.co.kr/
     ```
 
 
