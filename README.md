@@ -7,7 +7,8 @@
 5. [🌐 Architecture](#architecture)
 6. [🗂 ERD](#erd)
 7. [🎨 Wireframe](#wireframe)
-8. [👨‍👩‍👧‍👦 Team](#team)
+8. [📜Sequence Diagram](#sequencediagram)
+9. [👨‍👩‍👧‍👦 Team](#team)
 
 <br>
 
@@ -262,8 +263,16 @@ To set up and run the project, follow these steps:
 <br><br>
 
 ---
+<a name="sequencediagram"></a>
+## 8. 📜 Sequence Diagram
+![image](https://github.com/user-attachments/assets/3677b8e5-2c9e-4804-b16e-276d3147457a)
+
+
+<br><br>
+
+---
 <a name="team"></a>
-## 8. 👨‍👩‍👧‍👦 Team
+## 9. 👨‍👩‍👧‍👦 Team
 ![image](https://github.com/user-attachments/assets/46d5d456-7ddd-4e2e-940e-51cc1420a1b8)
 
 
