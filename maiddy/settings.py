@@ -5,7 +5,7 @@ from datetime import timedelta
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("DJANGO_SECRET_KEY", "fallback_secret_key")
 
-DEBUG = False
+DEBUG = True
 FRONTEND_IP = config("FRONTEND_IP")
 BACKEND_IP = config("BACKEND_IP")
 
@@ -15,7 +15,8 @@ ALLOWED_HOSTS = [
     BACKEND_IP, 
     "maiddy.co.kr:3000",
     "maiddy_ai:5001",
-    "api.maiddy.co.kr"
+    "api.maiddy.co.kr",
+    "localhost"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -26,7 +27,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000", 
     f"http://{BACKEND_IP}:8000", 
     "http://maiddy.co.kr:3000",
-    "http://maiddy_ai:5001"
+    "http://maiddy_ai:5001",
 ]
 
 CORS_ALLOW_METHODS = [
@@ -111,7 +112,6 @@ TEMPLATES = [
 WSGI_APPLICATION = "maiddy.wsgi.application"
 
 
-#postgresql 설정 (나중에 .env로 변경)
 
 DATABASES = {
     "default": {

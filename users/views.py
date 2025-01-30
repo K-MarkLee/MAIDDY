@@ -5,15 +5,6 @@ from rest_framework.decorators import api_view, permission_classes, authenticati
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UserCreateSerializer
-from rest_framework import status
-from .serializers import UserCreateSerializer
-from rest_framework.response import Response
-from django.contrib.auth import authenticate
-from django.contrib.auth import get_user_model
-from rest_framework.permissions import AllowAny
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.decorators import api_view, permission_classes, authentication_classes
-
 
 User = get_user_model()
 
@@ -39,6 +30,12 @@ def login(request):
     email = request.data.get('email')
     password = request.data.get('password')
 
+    if not email or not password:
+        return Response(
+            {"error": "이메일과 비밀번호를 모두 입력해주세요."}, 
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
     user = authenticate(request, email=email, password=password)
 
     if user is not None: 
@@ -49,7 +46,10 @@ def login(request):
             "message": f"{user.username}님, 반갑습니다!",
         }, status=status.HTTP_200_OK)
     else:
-        return Response({"error": "로그인 정보가 올바르지 않습니다. 다시한번 확인해주세요."}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response(
+            {"error": "이메일 또는 비밀번호가 올바르지 않습니다."}, 
+            status=status.HTTP_401_UNAUTHORIZED
+        )
 
 
 @api_view(['POST'])
