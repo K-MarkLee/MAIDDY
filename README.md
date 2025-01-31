@@ -266,7 +266,8 @@ To set up and run the project, follow these steps:
 ---
 <a name="sequencediagram"></a>
 ## 8. 📜 Sequence Diagram
-![image](https://github.com/user-attachments/assets/3677b8e5-2c9e-4804-b16e-276d3147457a)
+![image](https://github.com/user-attachments/assets/59bc4131-4186-4f8c-ac30-ebbb27d71ce3)
+
 
 
 <br><br>
