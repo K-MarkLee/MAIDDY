@@ -191,7 +191,6 @@ To set up and run the project, follow these steps:
 
  ### 클라우드 및 인프라 (Cloud/Infrastructure)
 - **AWS EC2**: 서버 호스팅 및 애플리케이션 실행
-- **AWS S3**: 파일 스토리지 및 데이터 백업
 - **Docker**: 컨테이너 기반 개발 및 배포
 - **Nginx**: 리버스 프록시 및 서버 관리
 - **Gunicorn**: Python WSGI 서버로 안정적인 애플리케이션 실행
@@ -225,7 +224,6 @@ To set up and run the project, follow these steps:
   <br>
   <!-- Cloud/Infrastructure -->
   <img src="https://img.shields.io/badge/AWS%20EC2-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white">
-  <img src="https://img.shields.io/badge/AWS%20S3-569A31?style=for-the-badge&logo=amazons3&logoColor=white">
   <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">
   <img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white">
   <img src="https://img.shields.io/badge/Gunicorn-000000?style=for-the-badge&logo=gunicorn&logoColor=white">
