@@ -1,7 +1,7 @@
 ## 🧷 Other Repo
 #### [🤖 AI REPOSITORY] (https://github.com/K-MarkLee/MAIDDY_AI)
 #### [🖥️ FRONT REPOSITORY] (https://github.com/K-MarkLee/MAIDDY_Front)
-<br>
+<br> 
 
 
 ## 📖 Navigation
